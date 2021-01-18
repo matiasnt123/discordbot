@@ -9,7 +9,8 @@ initial_extensions = [
     "cogs.misc", 
 	"cogs.owner", 
 	"cogs.good_morning",
-	"cogs.channels"
+	"cogs.channels",
+	"cogs.voice_channel"
 ]
 
 # load discord token
