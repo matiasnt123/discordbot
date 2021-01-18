@@ -1,4 +1,4 @@
-import discord, asyncio, random, PyNaCl
+import discord, asyncio, random
 from discord.ext import commands
 
 class voice_channel(commands.Cog):
