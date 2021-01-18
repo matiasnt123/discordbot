@@ -6,7 +6,10 @@ import discord, sys, os
 # logging.basicConfig(level=logging.INFO)
 
 initial_extensions = [
-    "cogs.misc", "cogs.owner", "cogs.good_morning", "cogs.channels"
+    "cogs.misc", 
+	"cogs.owner", 
+	"cogs.good_morning",
+	"cogs.channels"
 ]
 
 # load discord token
