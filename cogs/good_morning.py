@@ -25,7 +25,7 @@ class good_morning(commands.Cog):
     @tasks.loop(hours=1)
     async def good_morning(self):
         current_time = datetime.now().strftime("%H:%M:%S")
-        pattern = "14:..:.."
+        pattern = "12:..:.."  # 9 AM
         is_time = re.match(pattern, current_time)
         channel = self.bot.get_channel(self.channel_id)
         
