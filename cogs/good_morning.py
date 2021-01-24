@@ -21,12 +21,6 @@ class good_morning(commands.Cog):
             6: "resources/good_morning_images/sunday" #sunday
             }
         self.good_morning.start()
-
-    @commands.command()
-    async def save_image(self, ctx, name:str):
-        message = discord.Message
-        print(message.attachments, message.embeds)
-        #await save("/")
     
     @tasks.loop(hours=1)
     async def good_morning(self):
