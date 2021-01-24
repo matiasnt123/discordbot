@@ -1,8 +1,7 @@
-import discord, os, re, random
+import discord, os, re, random, asyncio
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from datetime import datetime
-from dadjokes import Dadjoke
 
 load_dotenv()
 
@@ -10,6 +9,8 @@ class good_morning(commands.Cog):
     def __init__(self, bot):  # This allows the cog to access the bot, and its functions
         self.bot = bot
         self.channel_id = int(os.getenv("GOOD_MORNING_CHANNEL_ID"))
+        self.first_img_path = "resources/good_morning_images/first.jpg"
+        self.jokes_path = "resources/good_morning_images/jokes.txt"
         self.days = {
             0: "resources/good_morning_images/monday", # monday
             1: "resources/good_morning_images/tuesday", #tuesday
@@ -21,23 +22,37 @@ class good_morning(commands.Cog):
             }
         self.good_morning.start()
 
+    @commands.command()
+    async def save_image(self, ctx, name:str):
+        message = discord.Message
+        print(message.attachments, message.embeds)
+        #await save("/")
+    
     @tasks.loop(hours=1)
     async def good_morning(self):
         current_time = datetime.now().strftime("%H:%M:%S")
-        pattern = "12:..:.."
+        pattern = "14:..:.."
         is_time = re.match(pattern, current_time)
         channel = self.bot.get_channel(self.channel_id)
         
         if is_time:
-            current_day = datetime.today().weekday()
-            path = self.days.get(current_day)
+            path = self.days.get(datetime.today().weekday())
             file_to_send = random.choice(os.listdir(path))
             full_path = path + "/" + file_to_send
-            await channel.send(file=discord.File(full_path))     
+            
+            with open(self.first_img_path, 'rb') as fp:
+                await channel.send(file=discord.File(fp, 'preparense.jpg'))
+            print("Sending {} to channel {}.".format(self.first_img_path, channel))
+
+            await asyncio.sleep(300)  # 5 minutes
+
+            with open(full_path, 'rb') as fp:
+                await channel.send(file=discord.File(fp, 'muy buenas.jpg'))
             print("Sending {} to channel {}.".format(file_to_send, channel))  
-            # send a dad joke
-            dadjoke = Dadjoke()
-            await channel.send("{} #humor :thinking:".format(dadjoke.joke))
+            
+            joke = random.choice(open(self.jokes_path, encoding="utf8").read().splitlines())
+            await channel.send("{} \n\n #humor... :thinking:".format(joke))
+            print("Sending joke '{}' to channel {}.".format(joke, channel)) 
     
     @good_morning.before_loop
     async def before_good_morning(self):

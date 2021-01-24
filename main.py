@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from discord.ext import commands
-from keep_alive import keep_alive
+#from keep_alive import keep_alive
 import discord, sys, os
 # import logging
 # logging.basicConfig(level=logging.INFO)
@@ -27,7 +27,6 @@ if __name__ == '__main__':
 	for extension in initial_extensions:
 		bot.load_extension(extension)
 
-
 @bot.event
 async def on_ready():
 	await bot.change_presence(
@@ -38,6 +37,5 @@ async def on_ready():
 
 	print('Logged in as {0.user}.'.format(bot))
 
-
-keep_alive()
+#keep_alive()
 bot.run(DISCORD_TOKEN)
