@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from discord.ext import commands
-#from keep_alive import keep_alive
+from keep_alive import keep_alive
 import discord, sys, os
 # import logging
 # logging.basicConfig(level=logging.INFO)
@@ -37,5 +37,5 @@ async def on_ready():
 
 	print('Logged in as {0.user}.'.format(bot))
 
-#keep_alive()
+keep_alive()
 bot.run(DISCORD_TOKEN)
