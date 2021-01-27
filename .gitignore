@@ -1,2 +1,4 @@
 .env
+main_nokeepalive.py
+discord.log
 **/__pycache__
