@@ -2,6 +2,7 @@ import discord, os, re, random, asyncio
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from datetime import datetime
+from pathlib import Path
 
 load_dotenv()
 
@@ -22,6 +23,27 @@ class good_morning(commands.Cog):
             }
         self.good_morning.start()
     
+    @commands.command()
+    async def save(self, ctx, day:int):
+        
+        try:
+            replied_message = await ctx.fetch_message(ctx.message.reference.message_id)
+            attachments = replied_message.attachments  
+        except:
+            ctx.send("Tenés que responder a una imagen :angry:")
+
+        for attachment in attachments:
+            try:
+                path = self.days.get(day)
+                filename = path.rsplit('/', 1)[-1] + "_" + str(len(os.listdir(path)) + 1) + ".jpg"
+                await attachment.save(fp=str(path + "/" + filename))
+            except AttributeError:
+                await ctx.send(":x: No man, los dias van de 0 (lunes) a 6 (domingo)")
+            else:
+                await ctx.send("very nice :ok_hand:")
+            
+            
+
     @tasks.loop(hours=1)
     async def good_morning(self):
         current_time = datetime.now().strftime("%H:%M:%S")
